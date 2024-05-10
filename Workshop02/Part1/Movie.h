@@ -4,7 +4,11 @@
 #include <climits> // for INT_MAX
 
 // TODO: put all the code `seneca` namespace
+#ifndef SENECA_MOVIE_H
+#define SENECA_MOVIE_H
 
+namespace seneca
+{
 	/// <summary>
 	/// A structure that encapsulates some information about a
 	///   single movie.
@@ -21,6 +25,27 @@
 		double m_rating;
 	};
 
+
+	/* TODO: add the prototype of the `loadData` function that receives as a parameter
+	*         the address of an unmodifiable C-string and returns a Boolean value.
+	*         Implement it in the cpp file as described below.
+	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	*
+	* loadData()
+	* - check if there are movies already loaded. If "yes", call the function
+	*     `seneca::deallocateMemory()` to discard the old collection.
+	* - open the file whose name was received as parameter (use `seneca::openFile`).
+	*     If the file cannot be open, exit the function with `false`.
+	* - using `seneca::getRecordsCount()`, retrieve the number of movies that exists
+	*     in the file. Store this number in a global variable.
+	* - allocate a dynamic array of `Movie` objects able to store all the records from
+	*     the file.  Store the address of this array in a global variable.
+	* - in a loop, load from file one movie at a time and store the info in the array.
+	*     Use `seneca::loadData` overload to retrieve a single record from file.
+	* - close the file and exit with `true`.
+	*
+	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	*/
 	/// <summary>
 	/// Loads from a file a collection of movies. Each movie record
 	///   in the file is stored on a single line in the format:
@@ -40,36 +65,9 @@
 	/// </summary>
 	/// <param name="fileName">the file containing the collection of movies</param>
 	/// <returns>true if the data was loaded successfully, false otherwise.</returns>
-	/* TODO: add the prototype of the `loadData` function that receives as a parameter
-	*         the address of an unmodifiable C-string and returns a Boolean value.
-	*         Implement it in the cpp file as described below.
-	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	* 
-	* loadData()
-	* - check if there are movies already loaded. If "yes", call the function
-	*     `seneca::deallocateMemory()` to discard the old collection.
-	* - open the file whose name was received as parameter (use `seneca::openFile`).
-	*     If the file cannot be open, exit the function with `false`.
-	* - using `seneca::getRecordsCount()`, retrieve the number of movies that exists
-	*     in the file. Store this number in a global variable.
-	* - allocate a dynamic array of `Movie` objects able to store all the records from
-	*     the file.  Store the address of this array in a global variable.
-	* - in a loop, load from file one movie at a time and store the info in the array.
-	*     Use `seneca::loadData` overload to retrieve a single record from file.
-	* - close the file and exit with `true`.
-	* 
-	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	*/
+	bool loadData(const char fileName[]);
 
-	/// <summary>
-	/// Load from the file information about a single movie, and
-	///   store it in the parameter.
-	/// 
-	/// The file must be already opened before this function is called.
-	/// </summary>
-	/// <param name="aMovie">the object to populate with data extracted
-	///   from the file.</param>
-	/// <returns>true if data was successfully extracted, false otherwise.</returns>
+
 	/* TODO: add the prototype of the `loadData` function that receives as a parameter
 	*         a reference to an object of type `Movie` and returns a Boolean value.
 	*         Implement it in the cpp file as described below.
@@ -85,13 +83,18 @@
 	*
 	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	*/
-
 	/// <summary>
-	/// Prints to screen the information about a single movie, in the format:
-	///   `TITLE, BUDGET, $GROSS_INCOME, RATING\n`
+	/// Load from the file information about a single movie, and
+	///   store it in the parameter.
+	/// 
+	/// The file must be already opened before this function is called.
 	/// </summary>
-	/// <param name="idx">the index in the collection of the movie whose info
-	///   must be printed to screen.</param>
+	/// <param name="aMovie">the object to populate with data extracted
+	///   from the file.</param>
+	/// <returns>true if data was successfully extracted, false otherwise.</returns>
+	bool loadData(Movie* aMovie);
+
+
 	/* TODO: add the prototype of the `display` function that receives as a parameter
 	*         an object of type `int`, and doesn't return anything.
 	*         Implement it in the cpp file as described below.
@@ -106,7 +109,32 @@
 	*
 	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	*/
+	/// <summary>
+	/// Prints to screen the information about a single movie, in the format:
+	///   `TITLE, BUDGET, $GROSS_INCOME, RATING\n`
+	/// </summary>
+	/// <param name="idx">the index in the collection of the movie whose info
+	///   must be printed to screen.</param>
+	void display(int idx);
 
+
+	/* TODO: add the prototype of the `display` function that receives as parameters
+	*         the address of an unmodifiable C-string, and two objects of type `int`.
+	*         Implement it in the cpp file as described below.
+	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	*
+	* display()
+	* - print the label to screen in the format
+	*     `******** LABEL ****************\n`
+	* - in a loop, starting at `startIdx` and until `endIdx` (but not exceeding the
+	*     boundaries of the collection)
+	*   - print `>> `
+	*   - call `seneca::display()` to print a single movie from a specific index.
+	*
+	* Documentation to read:
+	* - `INT_MAX`    - https://en.cppreference.com/w/c/types/limits
+	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+	*/
 	/// <summary>
 	/// Prints to screen all the movies from the collection starting with the index
 	///   `startIdx` until (and including) the index `endIdx`.  The output will be
@@ -127,27 +155,9 @@
 	///   shown. The default value of this parameter is `0`.</param>
 	/// <param name="endIdx">the index of the last movie from the collection to be
 	///   shown. The default value of this parameter is `INT_MAX`.</param>
-	/* TODO: add the prototype of the `display` function that receives as parameters
-	*         the address of an unmodifiable C-string, and two objects of type `int`.
-	*         Implement it in the cpp file as described below.
-	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	*
-	* display()
-	* - print the label to screen in the format
-	*     `******** LABEL ****************\n`
-	* - in a loop, starting at `startIdx` and until `endIdx` (but not exceeding the
-	*     boundaries of the collection)
-	*   - print `>> `
-	*   - call `seneca::display()` to print a single movie from a specific index.
-	*
-	* Documentation to read:
-	* - `INT_MAX`    - https://en.cppreference.com/w/c/types/limits
-	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-	*/
+	void display(const char label[], int startIdx = 0, int endIdx = INT_MAX);
 
-	/// <summary>
-	/// Deallocate all the dynamic memory used by the collection of movies.
-	/// </summary>
+
 	/* TODO: add the prototype of the `deallocateMemory` function.
 	*         Implement it in the cpp file as described below.
 	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -161,3 +171,11 @@
 	*
 	* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
 	*/
+	/// <summary>
+	/// Deallocate all the dynamic memory used by the collection of movies.
+	/// </summary>
+	void deallocateMemory();
+}
+
+#endif 
+
