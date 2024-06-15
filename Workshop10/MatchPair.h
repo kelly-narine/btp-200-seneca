@@ -1,14 +1,3 @@
-/*
-Name: Kelly Narine
-Email: knarine4@myseneca.ca
-Student ID: 140137233
-Date: April 2nd, 2024
-
-
-I have done all the coding by myself and only copied the code that my professor provided to complete my
-workshops and assignments.
-*/
-
 #ifndef SENECA_MATCHPAIR_H
 #define SENECA_MATCHPAIR_H
 namespace seneca
